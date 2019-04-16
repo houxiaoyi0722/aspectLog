@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<!-- namespace 对应的是接口的全名 -->
+<mapper namespace="com.aspectlog.mapper.OperationLogMapper">
+
+	<insert id="insertUserOptionLog" parameterType="hashmap" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `user_opreate_log_${table}` (
+			username,
+			create_time,
+			op_ip,
+			op_terminal,
+			op_server_id,
+			op_explain,
+			op_status,
+			fail_detail,
+			type_of_service
+		)
+		VALUES(
+			#{username},
+			#{createTime},
+			#{opIp},
+			#{opTerminal},
+			#{opServerId},
+			#{opExplain},
+			#{opStatus},
+			#{failDetail},
+			#{typeOfService}
+		)
+	</insert>
+
+	<update id="createTable" parameterType="String">
+		CREATE TABLE  IF NOT EXISTS `user_opreate_log_${table}`(
+			`id` INT(36) NOT NULL AUTO_INCREMENT,
+			`username` VARCHAR(50) DEFAULT NULL COMMENT '用户名',
+			`create_time` datetime DEFAULT NULL COMMENT '操作时间',
+			`op_ip` VARCHAR(50) DEFAULT NULL COMMENT '操作ip',
+			`op_terminal` VARCHAR(300) DEFAULT NULL COMMENT '操作终端',
+			`op_server_id` VARCHAR(300) DEFAULT NULL COMMENT '操作的业务id',
+			`op_explain` VARCHAR(500) DEFAULT NULL COMMENT '操作说明',
+			`op_status` VARCHAR(30) DEFAULT NULL COMMENT '操作状态',
+			`fail_detail` text COMMENT '失败详情',
+			`type_of_service` VARCHAR(50) DEFAULT NULL COMMENT '业务类型',
+			PRIMARY KEY(`id`)
+		) ENGINE=INNODB DEFAULT CHARSET=utf8
+	</update>
+
+</mapper>
